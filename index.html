@@ -1,5 +1,97 @@
-<html>
-<body>
-uwuw banb
-</body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+  </head>
+  <body>
+    <div class="container">
+      <form name="form-product" id="form-product">
+
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Name Product</label>
+          <input type="text" id="name_product" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Price Product</label>
+          <input type="text" id="price_product" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Stock Product</label>
+          <input type="text" id="stock_product" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+
+
+      <table class="table" id="displayArea">
+        <thead>
+          <tr>
+            <td>nama_product</td>
+            <td>price_product</td>
+            <td>stock_product</td>
+          </tr>
+        </thead>
+        <!-- <tbody id="displayArea">
+          
+        </tbody> -->
+      </table>
+    </div>
+
+    <script>
+
+    $.ajax({
+        url: "http://35.173.124.235:5000/product/all",
+        type: 'GET',
+        dataType: 'json', // added data type
+        success: function(res) {
+            // console.log(res.data.product.product);
+            var values = res.data.product.product;
+            // console.log(values[0].name_product);
+
+
+            for (var i=0; i<values.length; i++) {
+              var row = $('<tr><td>' + values[i].name_product + '</td><td>' + values[i].price_product + '</td><td>' + values[i].stock_product + '</td></tr>');
+              $('#displayArea').append(row);
+            }
+
+            // $('#displayArea').append("<tr><td>" + values.name_product + "</td><td>" + values.price_product + "</td><td>" + values.stock_product + "</td></tr>");
+            // alert(res);
+            
+        }
+    });
+
+
+      $("#form-product").submit(function (event) {
+        // alert($("#name_product").val());
+        var formData = {
+          name_product: $("#name_product").val(),
+          price_product: $("#price_product").val(),
+          stock_product: $("#stock_product").val(),
+
+        };
+
+        $.ajax({
+          type: "POST",
+          url: "http://35.173.124.235:5000/product/add",
+          data: formData,
+          dataType : 'json',   //you may use jsonp for cross origin request
+          encode: true,
+        }).done(function (data) {
+          alert(data)
+        });
+
+        event.preventDefault();
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  </body>
 </html>
