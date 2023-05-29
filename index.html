@@ -49,7 +49,7 @@
     <script>
 
     $.ajax({
-        url: "http://35.173.124.235:5000/product/all",
+        url: "http://107.21.134.76:5000/product/all",
         type: 'GET',
         dataType: 'json', // added data type
         success: function(res) {
@@ -72,21 +72,21 @@
 
       $("#form-product").submit(function (event) {
         // alert($("#name_product").val());
-        var formData = {
-          name_product: $("#name_product").val(),
-          price_product: $("#price_product").val(),
-          stock_product: $("#stock_product").val(),
+          var formData = {
+            name_product: $("#name_product").val(),
+            price_product: $("#price_product").val(),
+            stock_product: $("#stock_product").val(),
 
-        };
+          };
 
-        $.ajax({
-          type: "POST",
-          url: "http://35.173.124.235:5000/product/add",
+          $.ajax({
+            type: "POST",
+          url: "http://107.21.134.76:5000/product/add",
           data: formData,
           dataType : 'json',   //you may use jsonp for cross origin request
           encode: true,
         }).done(function (data) {
-          alert(data)
+          alert('success')
         });
 
         event.preventDefault();
